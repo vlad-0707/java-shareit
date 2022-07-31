@@ -11,6 +11,9 @@ import ru.practicum.shareit.item.service.ItemService;
 import javax.validation.Valid;
 import java.util.List;
 
+/**
+ * // TODO .
+ */
 @RestController
 @RequestMapping("/items")
 @RequiredArgsConstructor
@@ -19,7 +22,7 @@ public class ItemController {
 
     @PostMapping
     public ItemDto addNewItem(@RequestHeader("X-Sharer-User-Id") long userId,
-                              @Valid @RequestBody ItemDto itemDto) throws UserNotFoundException, ItemValidException, ItemAvailableException {
+                             @Valid @RequestBody ItemDto itemDto) throws UserNotFoundException, ItemValidException, ItemAvailableException {
         return itemService.addNewItem(itemDto, userId);
     }
 

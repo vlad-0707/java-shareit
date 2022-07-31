@@ -2,14 +2,12 @@ package ru.practicum.shareit.user.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import ru.practicum.shareit.exception.UserException;
 import ru.practicum.shareit.exception.UserNotFoundException;
 import ru.practicum.shareit.exception.UserValidException;
-import ru.practicum.shareit.user.model.User;
-import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.UserMapper;
+import ru.practicum.shareit.user.dto.UserDto;
+import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.repository.UserStorage;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -21,10 +19,7 @@ public class UserServiceImpl implements UserService{
     private final UserMapper userMapper;
 
     @Override
-    public UserDto create(UserDto userDto) throws UserValidException, UserNotFoundException, UserException {
-        if(userDto.getEmail() == null){
-            throw new UserException("");
-        }
+    public UserDto create(UserDto userDto) throws UserValidException, UserNotFoundException {
         userStorage.validEmail(userDto);
         User user = userStorage.create(userMapper.toUser(userDto));
         return userMapper.toUserDto(user);

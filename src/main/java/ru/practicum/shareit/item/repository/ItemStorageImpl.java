@@ -6,12 +6,14 @@ import ru.practicum.shareit.exception.ItemAvailableException;
 import ru.practicum.shareit.exception.UserNotFoundException;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
+import ru.practicum.shareit.user.repository.UserStorage;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
+
 
 @Component
 @RequiredArgsConstructor
@@ -20,24 +22,24 @@ public class ItemStorageImpl implements ItemStorage {
     private final Map<Long, Item> items = new ConcurrentHashMap<>();
 
     @Override
-    public Item add(Item item) {
+    public Item addNewItem(Item item) {
         item.setId(++id);
         items.put(item.getId(), item);
         return item;
     }
 
     @Override
-    public void update(Item item) {
+    public void updateItem(Item item) {
         items.put(item.getId(), item);
     }
 
     @Override
-    public Item getItemById(long itemId) {
+    public Item getId(long itemId) {
         return items.get(itemId);
     }
 
     @Override
-    public List<Item> getItemsByOwnerId(long id) {
+    public List<Item> getAllItemsByOwnerId(long id) {
         return items.values().stream()
                 .filter(i -> i.getOwner().equals(id))
                 .collect(Collectors.toList());
@@ -55,13 +57,13 @@ public class ItemStorageImpl implements ItemStorage {
     @Override
     public void validAvailable(ItemDto itemDto) throws ItemAvailableException {
         if (Objects.isNull(itemDto.getAvailable())) {
-            throw new ItemAvailableException("Не может быть равным нулю");
+            throw new ItemAvailableException("available can't be null");
         }
     }
 
     public void validOwner(long itemId, long userId) throws UserNotFoundException {
-        if(!getItemById(itemId).getOwner().equals(userId)){
-            throw new UserNotFoundException("Пользователь не является владельцем");
+        if(!getId(itemId).getOwner().equals(userId)){
+            throw new UserNotFoundException("user is not the owner");
         }
     }
 }

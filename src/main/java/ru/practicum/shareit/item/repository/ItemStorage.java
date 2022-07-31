@@ -7,13 +7,12 @@ import ru.practicum.shareit.item.model.Item;
 
 import java.util.List;
 
-
 public interface ItemStorage {
-        Item add(Item item);
-        void update(Item item);
-        Item getItemById(long itemId);
-        List<Item> getItemsByOwnerId(long id);
-        List<Item> search(String text);
-        void validAvailable(ItemDto itemDto) throws ItemAvailableException;
-        void validOwner(long itemId, long userId) throws UserNotFoundException;
+    Item addNewItem(Item item);
+    void updateItem(Item item);
+    Item getId(long itemId);
+    List<Item> getAllItemsByOwnerId(long id);
+    List<Item> search(String text);
+    void validAvailable(ItemDto itemDto) throws ItemAvailableException;
+    void validOwner(long itemId, long userId) throws UserNotFoundException;
 }

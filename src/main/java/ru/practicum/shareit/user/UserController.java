@@ -2,10 +2,10 @@ package ru.practicum.shareit.user;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.shareit.exception.UserException;
 import ru.practicum.shareit.exception.UserNotFoundException;
 import ru.practicum.shareit.exception.UserValidException;
 import ru.practicum.shareit.user.dto.UserDto;
+import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.service.UserService;
 
 import javax.validation.Valid;
@@ -18,7 +18,7 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping
-    public UserDto create(@Valid @RequestBody UserDto userDto) throws UserValidException, UserNotFoundException, UserException {
+    public UserDto create(@Valid @RequestBody UserDto userDto) throws UserValidException, UserNotFoundException {
         return userService.create(userDto);
     }
 
@@ -34,7 +34,7 @@ public class UserController {
 
     @PatchMapping("/{userId}")
     public UserDto update(@RequestBody UserDto userDto,
-                          @PathVariable Long userId) throws UserNotFoundException, UserValidException {
+                       @PathVariable Long userId) throws UserNotFoundException, UserValidException {
         return userService.update(userDto, userId);
     }
 

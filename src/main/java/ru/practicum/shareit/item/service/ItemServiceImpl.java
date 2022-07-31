@@ -25,7 +25,7 @@ public class ItemServiceImpl implements ItemService {
     public ItemDto addNewItem(ItemDto itemDto, long userId) throws UserNotFoundException, ItemAvailableException {
         userStorage.getById(userId);
         itemStorage.validAvailable(itemDto);
-        Item item = itemStorage.add(itemMapper.toItem(itemDto, userId));
+        Item item = itemStorage.addNewItem(itemMapper.toItem(itemDto, userId));
         return itemMapper.toItemDto(item);
     }
 
@@ -35,18 +35,18 @@ public class ItemServiceImpl implements ItemService {
         itemStorage.validOwner(itemId, userId);
         itemDto.setId(itemId);
         Item item = itemMapper.toItem(itemDto, userId);
-        itemStorage.update(item);
+        itemStorage.updateItem(item);
         return itemMapper.toItemDto(item);
     }
 
     @Override
     public ItemDto getId(long itemId) {
-        return itemMapper.toItemDto(itemStorage.getItemById(itemId));
+        return itemMapper.toItemDto(itemStorage.getId(itemId));
     }
 
     @Override
     public List<ItemDto> getAllItemsByOwnerId(long id) {
-        return itemStorage.getItemsByOwnerId(id).stream()
+        return itemStorage.getAllItemsByOwnerId(id).stream()
                 .map(itemMapper::toItemDto)
                 .collect(Collectors.toList());
     }

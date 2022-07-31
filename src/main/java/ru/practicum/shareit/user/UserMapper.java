@@ -1,5 +1,6 @@
 package ru.practicum.shareit.user;
 
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.exception.UserNotFoundException;

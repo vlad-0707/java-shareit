@@ -2,11 +2,10 @@ package ru.practicum.shareit.user.repository;
 
 import ru.practicum.shareit.exception.UserNotFoundException;
 import ru.practicum.shareit.exception.UserValidException;
-import ru.practicum.shareit.user.model.User;
 import ru.practicum.shareit.user.dto.UserDto;
+import ru.practicum.shareit.user.model.User;
 
 import java.util.Map;
-
 
 public interface UserStorage {
     User create(User user);

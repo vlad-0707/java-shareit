@@ -1,7 +1,11 @@
 package ru.practicum.shareit.user.model;
 
-import lombok.*;
-import javax.validation.constraints.Email;
+import lombok.Builder;
+import lombok.Data;
+
+/**
+ * // TODO .
+ */
 @Data
 @Builder
 public class User {
