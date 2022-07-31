@@ -9,12 +9,16 @@ import ru.practicum.shareit.exception.*;
 @RestControllerAdvice
 public class ErrorHandler {
 
-    @ExceptionHandler({UserException.class, ItemAvailableException.class})
+    @ExceptionHandler
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorResponse handleBadRequest(final Exception e) {
+    public ErrorResponse handleBadRequest(final ItemAvailableException e) {
         return new ErrorResponse("error", e.getMessage());
     }
-
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorResponse handleBadRequest(final UserException e) {
+        return new ErrorResponse("error", e.getMessage());
+    }
     @ExceptionHandler({ItemNotFoundException.class,
             UserNotFoundException.class,
             RequestNotFoundException.class,
