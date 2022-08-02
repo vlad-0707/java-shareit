@@ -1,12 +1,12 @@
 package ru.practicum.shareit.item.repository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import ru.practicum.shareit.exception.ItemAvailableException;
 import ru.practicum.shareit.exception.UserNotFoundException;
 import ru.practicum.shareit.item.dto.ItemDto;
 import ru.practicum.shareit.item.model.Item;
-import ru.practicum.shareit.user.repository.UserStorage;
 
 import java.util.List;
 import java.util.Map;
@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class ItemStorageImpl implements ItemStorage {
     private static long id;
     private final Map<Long, Item> items = new ConcurrentHashMap<>();
@@ -25,12 +26,14 @@ public class ItemStorageImpl implements ItemStorage {
     public Item addNewItem(Item item) {
         item.setId(++id);
         items.put(item.getId(), item);
+        log.info("Товар : {} добавлен", item.getName());
         return item;
     }
 
     @Override
     public void updateItem(Item item) {
         items.put(item.getId(), item);
+        log.info("Данные о товаре: {} обновленны", item.getName());
     }
 
     @Override

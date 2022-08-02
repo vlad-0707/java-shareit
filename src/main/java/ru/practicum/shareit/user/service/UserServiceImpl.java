@@ -1,18 +1,21 @@
 package ru.practicum.shareit.user.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.exception.UserNotFoundException;
 import ru.practicum.shareit.exception.UserValidException;
 import ru.practicum.shareit.user.UserMapper;
+import ru.practicum.shareit.user.repository.UserStorage;
 import ru.practicum.shareit.user.dto.UserDto;
 import ru.practicum.shareit.user.model.User;
-import ru.practicum.shareit.user.repository.UserStorage;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserServiceImpl implements UserService{
     private final UserStorage userStorage;
 
@@ -22,11 +25,13 @@ public class UserServiceImpl implements UserService{
     public UserDto create(UserDto userDto) throws UserValidException, UserNotFoundException {
         userStorage.validEmail(userDto);
         User user = userStorage.create(userMapper.toUser(userDto));
+        log.info("Пользователь {} добавлен", user.getName());
         return userMapper.toUserDto(user);
     }
 
     @Override
     public UserDto getById(long id) throws UserNotFoundException {
+        log.info("Пользователь c id: {} найден", id);
         return userMapper.toUserDto(userStorage.getById(id));
     }
 
@@ -44,11 +49,13 @@ public class UserServiceImpl implements UserService{
         userDto.setId(userId);
         User user = userMapper.toUser(userDto);
         userStorage.update(user);
+        log.info("Данные пользователя c id: {} обновленны", user.getId());
         return userMapper.toUserDto(user);
     }
 
     @Override
     public void delete(long id) {
         userStorage.delete(id);
+        log.info("Пользователь c id: {} удален",id);
     }
 }

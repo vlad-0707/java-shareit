@@ -3,7 +3,6 @@ package ru.practicum.shareit.user.service;
 import ru.practicum.shareit.exception.UserNotFoundException;
 import ru.practicum.shareit.exception.UserValidException;
 import ru.practicum.shareit.user.dto.UserDto;
-import ru.practicum.shareit.user.model.User;
 
 import java.util.List;
 
