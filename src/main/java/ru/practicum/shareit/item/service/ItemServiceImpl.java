@@ -1,6 +1,7 @@
 package ru.practicum.shareit.item.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import ru.practicum.shareit.booking.Status;
@@ -28,6 +29,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ItemServiceImpl implements ItemService {
     private final UserRepository userRepository;
     private final ItemRepository itemRepository;
@@ -43,6 +45,7 @@ public class ItemServiceImpl implements ItemService {
         }
         Item item = modelMapper.map(itemDto, Item.class);
         item.setOwner(userService.getById(userId));
+        log.info("Added item {}", item.getName());
         return itemRepository.save(item);
     }
 
@@ -53,6 +56,7 @@ public class ItemServiceImpl implements ItemService {
             throw new ItemNotFoundException();
         }
         modelMapper.map(itemDto, item);
+        log.info("Updated item {}", item.getName());
         return itemRepository.save(item);
     }
 
@@ -65,6 +69,7 @@ public class ItemServiceImpl implements ItemService {
             itemOwnerDto.setLastBooking(getLastByItemId(itemId));
             itemOwnerDto.setNextBooking(getNextByItemId(itemId));
         }
+        log.info("Find owner item {}", itemOwnerDto.getName());
         return itemOwnerDto;
     }
 
@@ -100,6 +105,7 @@ public class ItemServiceImpl implements ItemService {
         commentRepository.save(comment);
         CommentDto newCommentDto = modelMapper.map(comment, CommentDto.class);
         newCommentDto.setAuthorName(comment.getAuthor().getName());
+        log.info("Added comment with id: {}", newCommentDto.getId());
         return newCommentDto;
     }
 
