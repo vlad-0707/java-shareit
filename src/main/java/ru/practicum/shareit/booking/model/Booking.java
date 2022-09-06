@@ -1,45 +1,45 @@
-package ru.practicum.shareit.item.model;
+package ru.practicum.shareit.booking.model;
 
 import lombok.*;
 import org.hibernate.Hibernate;
-import ru.practicum.shareit.request.model.ItemRequest;
+import ru.practicum.shareit.booking.Status;
+import ru.practicum.shareit.item.model.Item;
 import ru.practicum.shareit.user.model.User;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 @Entity
-@Table(name = "items")
+@Table(name = "bookings")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-public class Item {
+public class Booking {
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "name")
-    private String name;
-    @Column(name = "description")
-    private String description;
-    @Column(name = "is_available")
-    private Boolean available;
+    @Column(name = "start_date")
+    private LocalDateTime start;
+    @Column(name = "end_date")
+    private LocalDateTime end;
     @ManyToOne
-    @JoinColumn(name = "owner_id")
-    private User owner;
+    private Item item;
     @ManyToOne
-    @JoinColumn(name = "request_id")
-    private ItemRequest request;
+    private User booker;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private Status status;
 
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Item item = (Item) o;
-        return Objects.equals(id, item.id);
+        Booking booking = (Booking) o;
+        return Objects.equals(id, booking.id);
     }
 
     @Override
