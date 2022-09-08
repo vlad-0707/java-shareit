@@ -1,6 +1,7 @@
 package ru.practicum.shareit.booking.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ import ru.practicum.shareit.user.repository.UserRepository;
 import ru.practicum.shareit.user.service.UserService;
 
 import java.time.LocalDateTime;
-
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class BookingServiceImpl implements BookingService {
@@ -42,6 +43,7 @@ public class BookingServiceImpl implements BookingService {
         booking.setItem(modelMapper.map(itemRepository.findById(bookingConsumerDto.getItemId()), Item.class));
         booking.setBooker(userService.getById(userId));
         booking.setStatus(Status.WAITING);
+        log.info("Create booking with Id: {}",booking.getId());
         return bookingRepository.save(booking);
     }
 
@@ -55,6 +57,7 @@ public class BookingServiceImpl implements BookingService {
             throw new UserNotFoundException();
         }
         booking.setStatus(approve ? Status.APPROVED : Status.REJECTED);
+        log.info("Approved status booking with status: {}", booking.getStatus());
         return bookingRepository.save(booking);
     }
 

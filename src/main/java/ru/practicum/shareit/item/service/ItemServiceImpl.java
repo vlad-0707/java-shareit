@@ -132,6 +132,7 @@ public class ItemServiceImpl implements ItemService {
         }
         NestedBookingDto nestedBookingDto = modelMapper.map(booking, NestedBookingDto.class);
         nestedBookingDto.setBookerId(booking.getBooker().getId());
+        log.info("Finded last item by Id: {}",booking.getId());
         return nestedBookingDto;
     }
 
@@ -143,6 +144,7 @@ public class ItemServiceImpl implements ItemService {
         }
         NestedBookingDto nestedBookingDto = modelMapper.map(booking, NestedBookingDto.class);
         nestedBookingDto.setBookerId(booking.getBooker().getId());
+        log.info("Finded next item by Id: {}",booking.getId());
         return nestedBookingDto;
     }
 
