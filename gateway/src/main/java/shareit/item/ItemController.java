@@ -25,6 +25,7 @@ public class ItemController {
     @PostMapping
     public ResponseEntity<Object> addNewItem(@RequestHeader("X-Sharer-User-Id") long userId,
                               @Valid @RequestBody ItemDto itemDto) {
+        log.info("Added new item with user id {}", userId);
         return itemClient.addNewItem(itemDto, userId);
     }
 
@@ -32,6 +33,7 @@ public class ItemController {
     public ResponseEntity<Object> updateItem(@RequestHeader("X-Sharer-User-Id") long userId,
                               @PathVariable long itemId,
                               @RequestBody ItemDto itemDto) {
+        log.info("Updated item with id {}", itemId);
         return itemClient.updateItem(itemDto, itemId, userId);
     }
 
@@ -39,12 +41,14 @@ public class ItemController {
     public ResponseEntity<Object> addComment(@PathVariable long itemId,
                                  @Valid @RequestBody CommentDto commentDto,
                                  @RequestHeader("X-Sharer-User-Id") long userId) {
+        log.info("Added comment with item id {}", itemId);
         return itemClient.addComment(itemId, commentDto, userId);
     }
 
     @GetMapping("/{itemId}")
     public ResponseEntity<Object> getId(@RequestHeader("X-Sharer-User-Id") long userId,
                               @PathVariable long itemId)  {
+        log.info("Found item with id {}", itemId);
         return itemClient.getId(itemId, userId);
     }
 

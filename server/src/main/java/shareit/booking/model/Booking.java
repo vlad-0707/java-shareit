@@ -29,7 +29,7 @@ public class Booking {
     private Item item;
     @ManyToOne
     private User booker;
-    @Column(name = "status")
+    @Column(name = "status",nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
 

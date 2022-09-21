@@ -8,7 +8,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import shareit.booking.dto.BookingConsumerDto;
 
-
 import javax.validation.Valid;
 
 @Controller
@@ -23,6 +22,7 @@ public class BookingController {
 	@PostMapping
 	public ResponseEntity<Object> addNewBooking(@RequestHeader("X-Sharer-User-Id") Long userId,
 									@Valid @RequestBody BookingConsumerDto bookingConsumerDto)  {
+		log.info("Added new booking with user id: {}",userId);
 		return bookingClient.create(bookingConsumerDto, userId);
 	}
 
@@ -30,12 +30,14 @@ public class BookingController {
 	public ResponseEntity<Object> approved(@RequestHeader("X-Sharer-User-Id") Long userId,
 							   @PathVariable Long bookingId,
 							   @RequestParam Boolean approved)  {
+		log.info("Approved booking with id: {}",bookingId);
 		return bookingClient.approved(userId, bookingId, approved);
 	}
 
 	@GetMapping("/{bookingId}")
 	public ResponseEntity<Object> getById(@RequestHeader("X-Sharer-User-Id") Long userId,
 							  @PathVariable Long bookingId)  {
+		log.info("Found booking with id: {}",bookingId);
 		return bookingClient.getById(userId, bookingId);
 	}
 

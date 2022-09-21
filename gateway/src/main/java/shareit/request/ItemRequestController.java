@@ -24,11 +24,13 @@ public class ItemRequestController {
     @PostMapping
     public ResponseEntity<Object> addNewRequest(@RequestHeader("X-Sharer-User-Id")long userId,
                                         @Valid @RequestBody ItemRequestDto itemRequestDto) {
+        log.info("Added new request with user id: {}", userId);
         return itemRequestClient.addNewRequest(userId, itemRequestDto);
     }
 
     @GetMapping
     public ResponseEntity<Object> getRequestsByUserId(@RequestHeader("X-Sharer-User-Id")long userId) {
+        log.info("Found request with user id: {}", userId);
         return itemRequestClient.getRequestsByUserId(userId);
     }
 
